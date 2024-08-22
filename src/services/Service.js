@@ -15,7 +15,32 @@ const GetMovies = async () => {
 const GetMovieDetails = async (id) => {
     try {
         let response = await ApiCaller.Get(Apis.GetMovieDetails(id))
-        console.log("response", response)
+        if (response?.status == 200)
+            return response?.data
+    }
+    catch (e) {
+        console.error(e)
+    }
+}
+const GetMovieVideos = async (id) => {
+    try {
+        let response = await ApiCaller.Get(Apis.GetVideos(id))
+        if (response?.status == 200)
+            return response?.data
+    }
+    catch (e) {
+        console.error(e)
+    }
+}
+const SearchMovie = async (query) => {
+    try {
+        let params = {
+            api_key: "cc1c7bbeda93cd46a4ffbd5cd9833672",
+            query: query,
+            language: 'en-US',
+            include_adult: false,
+        }
+        let response = await ApiCaller.Get(Apis.SearchMovie(), "", {}, params)
         if (response?.status == 200)
             return response?.data
     }
@@ -25,4 +50,5 @@ const GetMovieDetails = async (id) => {
 }
 
 
-export { GetMovies, GetMovieDetails }
+
+export { GetMovies, GetMovieDetails, GetMovieVideos, SearchMovie }

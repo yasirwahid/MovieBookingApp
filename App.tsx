@@ -6,6 +6,7 @@ import WatchScreen from './src/screens/WatchScreen/WatchScreen';
 import MovieDetailsScreen from './src/screens/MovieDetailsScreen/MovieDetailsScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TicketBookingScreen from './src/screens/TicketBookingScreen/TicketBookingScreen';
+import SearchScreen from './src/screens/SearchScreen/SearchScreen';
 // import { NativeModules } from 'react-native';
 
 const Stack = createNativeStackNavigator();
@@ -13,9 +14,10 @@ const Stack = createNativeStackNavigator();
 function WatchStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="WatchScreen" component={WatchScreen} />
+      <Stack.Screen name="WatchScreen" component={WatchScreen} options={{ headerShown: false }} />
       <Stack.Screen name="MovieDetail" component={MovieDetailsScreen} options={{ headerShown: false }} />
       <Stack.Screen name="TicketBooking" component={TicketBookingScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

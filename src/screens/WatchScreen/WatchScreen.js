@@ -1,40 +1,50 @@
 // src/screens/WatchScreen.js
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import styles from './WatchScreen.styles';
-import { GetMovies } from '../../services/Service';
-import { imgaeUrl } from '../../services/Apis';
+import {GetMovies} from '../../services/Service';
+import MovieItem from '../../components/MovieItem';
+import {Images} from '../../assets';
 
-const WatchScreen = ({ navigation }) => {
-    let [data, setData] = useState([])
+const WatchScreen = ({navigation}) => {
+  let [data, setData] = useState([]);
 
-    useEffect(() => {
-        GetMoviesList()
-    }, [])
+  useEffect(() => {
+    GetMoviesList();
+  }, []);
 
-    const GetMoviesList = async () => {
-        let movies = await GetMovies()
-        setData(movies?.results)
-    }
+  const GetMoviesList = async () => {
+    let movies = await GetMovies();
+    setData(movies?.results);
+  };
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('MovieDetail', { id: item?.id })}>
-            <Image source={{ uri: `${imgaeUrl}${item.poster_path}` }} style={styles.movieImage} />
-            <Text style={styles.movieTitle}>{item.title}</Text>
+  const renderItem = ({item}) => (
+    <MovieItem item={item} navigation={navigation} />
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Watch</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigation?.navigate('SearchScreen')}>
+          <Image source={Images.search} style={styles.icon} />
         </TouchableOpacity>
-    );
-
-    return (
-        <View style={styles.container}>
-            <TextInput placeholder="Search" style={styles.searchInput} />
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
-        </View>
-    );
+      </View>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </View>
+  );
 };
-
 
 export default WatchScreen;
